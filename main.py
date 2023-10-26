@@ -32,7 +32,6 @@ data = pandas.read_csv("50_states.csv")
 us_states = data.state.to_list()
 states_guessed = []
 end_game = False
-study_states = []
 
 while len(states_guessed) <= 50 and end_game == False:
     answer_state = screen.textinput(title=f"States correct {len(states_guessed)}/50",
@@ -46,9 +45,8 @@ while len(states_guessed) <= 50 and end_game == False:
         states_guessed.append(answer_state)
     elif answer_state.lower() == "exit":
         #Get states not guessed:
-        for state in us_states:
-            if state not in states_guessed:
-                study_states.append(state)
+        study_states = [state for state in us_states if state not in
+                        states_guessed]
         #Create a Series from it
         states_series_csv = pandas.DataFrame(study_states).rename_axis(
                 "States to study").to_csv("states_to_learn.csv")
